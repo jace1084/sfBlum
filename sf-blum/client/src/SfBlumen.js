@@ -22,7 +22,7 @@ handleSubmit(event) {
         notes: this.state.notes
     }
     console.log(data)
-    fetch("/new", {
+    fetch("http://localhost:3001/orchids/add", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -53,7 +53,7 @@ onChange(e) {
        {/* <button onclick="sortTable()">Sort</button> */}
     </header>
 
-    <form className="orchidAdditon" method="POST" action="/new">
+    <form className="orchidAdditon">
 
       {/* <input type="text" name="orchid" placeholder="Add a new Orchid"></input> */}
       <label>Genus:</label>
