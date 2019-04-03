@@ -1,0 +1,14 @@
+DROP DATABASE IF EXISTS orchids_db;
+CREATE DATABASE orchids_db;
+
+USE orchids_db;
+
+CREATE TABLE orchids(
+	id INT NOT NULL AUTO_INCREMENT,
+	# INT NOT NULL AUTO_INCREMENT,
+	genus VARCHAR(255) NOT NULL,
+    species VARCHAR(255) NOT NULL,
+    cultivar VARCHAR(255) NOT NULL,
+    notes VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
+);
