@@ -1,10 +1,10 @@
-var mysql = require("mysql");
-var express = require('express');
+var mysql = require("./node_modules/mysql");
+var express = require('./node_modules/express');
 var app = express();
-// var router = express.Router();
+var router = express.Router();
 
 //you need this to be able to process information sent to a POST route
-	var bodyParser = require('body-parser');
+	var bodyParser = require('./node_modules/body-parser');
 
 	// parse application/x-www-form-urlencoded
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,31 +33,32 @@ var connection = mysql.createConnection({
   password: "password",
   database: "orchids_db"
 });
+connection.connect();
 
-app.get("/", function(req, res){
+router.get("/", function(req, res){
 	res.send("this is the server")
 });
 
 
-app.post('/new', function(req, res, next) {
-	var post = {
-		genus: req.body.genus,
-		cultivar: req.body.cultivar,
-		species: req.body.species,
-		notes: req.body.notes
-	  };
-	connection.query('insert into orchids values ?', post, function (error, results, fields) {
-			if(error) throw error;
-			res.send(JSON.stringify(results));
-	});
-});
-app.get('/new', function(req, res, next) {
-	connection.query('select * from orchids', function (error, results, fields) {
-			if(error) throw error;
-			res.send(JSON.stringify(results));
-	});
-});
+// router.post('/new', function(req, res, next) {
+// 	var post = {
+// 		genus: req.body.genus,
+// 		cultivar: req.body.cultivar,
+// 		species: req.body.species,
+// 		notes: req.body.notes
+// 	  };
+// 	connection.query('insert into orchids values ?', post, function (error, results, fields) {
+// 			if(error) throw error;
+// 			res.send(JSON.stringify(results));
+// 	});
+// });
+// app.get('/new', function(req, res, next) {
+// 	connection.query('select * from orchids', function (error, results, fields) {
+// 			if(error) throw error;
+// 			res.send(JSON.stringify(results));
+// 	});
+// });
 
 
 
-module.exports = app;
+module.exports = router;

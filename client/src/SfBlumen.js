@@ -14,7 +14,20 @@ class SfBlumen extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 }
-
+componentDidMount(){
+  
+  fetch('http://localhost:3000/orchid', { 
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(function(response) {
+    // 
+    console.log(response);
+  }).then(function(body) {
+    console.log(body);
+  });
+}
 onSubmit(e) {
     e.preventDefault()
     var data = {
@@ -25,17 +38,7 @@ onSubmit(e) {
         notes: this.state.notes
     }
 
-    fetch('http://localhost:3001/orchid', { 
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      // 
-      console.log(response);
-    }).then(function(body) {
-      console.log(body);
-    });
+    
 }
     // fetch("http://localhost:3000", {
     //     

@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
-const request = require('request');
 const bodyParser = require('body-parser');
 const router = express.Router();
 
@@ -15,38 +14,42 @@ const router = express.Router();
      next();
   });
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "password",
-    database: "orchids_db"
-  });
-  connection.connect();
+// var connection = mysql.createConnection({
+//     host: "localhost",
+//     port: 3306,
+//     user: "root",
+//     password: "password",
+//     database: "orchids_db"
+//   });
 
-  app.get('/orchid', function(req, res, results){
-    res.send(JSON.stringify(results));
-    // res.json([
-    //   {id: 1, username:"somebody"},
-    //   {id: 2, username:"somebody-else"}
-    // ])
-  });
 
-  router.post('http://localhost:3001/orchid', function(req, res) {
-    let genus = req.body.genus;
-    let cultivar = req.body.cultivar;
-    let species = req.body.species;
-    let notes = req.body.notes;
+  var orchidRoutes = require("./routes/orchids.js");
 
-    let query = connection.query(
-      "INSERT INTO orchids SET ?",
-      genus, cultivar, species, notes,
-      function(err, response) {
-        console.log(result)
-        res.redirect('/');
-      }
-    );
-  })
+  app.use("/", orchidRoutes); 
+
+  // app.get('/orchid', function(req, res, results){
+  //   res.send(JSON.stringify(results));
+  //   // res.json([
+  //   //   {id: 1, username:"somebody"},
+  //   //   {id: 2, username:"somebody-else"}
+  //   // ])
+  // });
+
+  // router.post('http://localhost:3001/orchid', function(req, res) {
+  //   let genus = req.body.genus;
+  //   let cultivar = req.body.cultivar;
+  //   let species = req.body.species;
+  //   let notes = req.body.notes;
+
+  //   let query = connection.query(
+  //     "INSERT INTO orchids SET ?",
+  //     genus, cultivar, species, notes,
+  //     function(err, response) {
+  //       console.log(result)
+  //       res.redirect('/');
+  //     }
+  //   );
+  // })
   
 
 
