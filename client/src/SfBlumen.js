@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Switch, Route, Link, Redirect } from "react-router-dom";
 import './sfBlumen.css';
 
 class SfBlumen extends Component {
@@ -10,36 +11,49 @@ class SfBlumen extends Component {
         cultivar: '',
         notes: ''
     }
-    this.onChange = this.onChange.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 }
 
-handleSubmit(event) {
-    event.preventDefault()
+onSubmit(e) {
+    e.preventDefault()
     var data = {
+      // value: e.target.value
         genus: this.state.genus,
         species: this.state.species,
         cultivar: this.state.cultivar,
         notes: this.state.notes
     }
-    console.log(data)
-    fetch("http://localhost:3001/orchids/add", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    }).then(function(response) {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json();
-    }).then(function(data) {
-        console.log(data)    
-        if(data == "success"){
-           this.setState({msg: "Successfully Added"});  
-        }
-    }).catch(function(err) {
-        console.log(err)
+
+    fetch('http://localhost:3001/orchid', { 
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      // 
+      console.log(response);
+    }).then(function(body) {
+      console.log(body);
     });
 }
+    // fetch("http://localhost:3000", {
+    //     
+    // }).then(function(response) {
+    //     if (response.status >= 400) {
+    //       throw new Error("Bad response from server");
+    //     }
+    //     return response.json();
+    // }).then(function(data) {
+    //     console.log(data)    
+    //     if(data === "success"){
+    //        this.setState({msg: "Successfully Added"});  
+    //        console.log('added');
+    //     }
+    // }).catch(function(err) {
+    //     console.log(err)
+    // });
+
 
 onChange(e) {
     this.setState({[e.target.name]: e.target.value});  
@@ -53,19 +67,23 @@ onChange(e) {
        {/* <button onclick="sortTable()">Sort</button> */}
     </header>
 
-    <form className="orchidAdditon">
+    <form className="orchidAdditon" method="POST" action="/orchids" onSubmit={this.onSubmit}>
 
       {/* <input type="text" name="orchid" placeholder="Add a new Orchid"></input> */}
-      <label>Genus:</label>
+      <label>Genus:
       <input type="text"  name="genus" value={this.state.genus} onChange={this.onChange}  placeholder="what's the Genus"></input>
-      <label>Species:</label>
+      </label>
+      <label>Species:
       <input type="text" name="species" value={this.state.species} onChange={this.onChange} placeholder="which Species"></input>  
-      <label>Cultivar:</label>
+      </label>
+      <label>Cultivar:
       <input type="text" name="cultivar" value={this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar"></input>
-      <label>Notes:</label>
+      </label>
+      <label>Notes:
       <input type="text" name="notes" value={this.state.notes} onChange={this.onChange} placeholder="Insert your Notes"></input>
+      </label>
       
-      <button onSubmit={this.handleSubmit}>submit</button>
+      <button>Submit</button>
 
     </form>
     
