@@ -23,7 +23,7 @@ const router = express.Router();
 //   });
 
 
-  var orchidRoutes = require("./routes/orchids.js");
+  var orchidRoutes = require("./Routes/orchids.js");
 
   app.use("/", orchidRoutes); 
 

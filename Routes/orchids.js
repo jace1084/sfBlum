@@ -1,10 +1,10 @@
-var mysql = require("./node_modules/mysql");
-var express = require('./node_modules/express');
+var mysql = require('mysql');
+var express = require('express');
 var app = express();
 var router = express.Router();
 
 //you need this to be able to process information sent to a POST route
-	var bodyParser = require('./node_modules/body-parser');
+	var bodyParser = require('body-parser');
 
 	// parse application/x-www-form-urlencoded
 	app.use(bodyParser.urlencoded({ extended: true }));
