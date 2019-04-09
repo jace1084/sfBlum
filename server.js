@@ -14,18 +14,24 @@ const router = express.Router();
      next();
   });
 
-// var connection = mysql.createConnection({
-//     host: "localhost",
-//     port: 3306,
-//     user: "root",
-//     password: "password",
-//     database: "orchids_db"
-//   });
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "password",
+    database: "orchids_db"
+  });
 
 
   var orchidRoutes = require("./Routes/orchids.js");
 
   app.use("/", orchidRoutes); 
+
+//   if (process.env.NODE_ENV === 'production') {
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//   });
+// }
 
   // app.get('/orchid', function(req, res, results){
   //   res.send(JSON.stringify(results));
@@ -71,6 +77,8 @@ const router = express.Router();
 // 			res.send(JSON.stringify(results));
 // 	});
 // });
+
+app.set("view engine", "ejs");
 
   app.listen(3001, () => {
       console.log('listening on port 3001')

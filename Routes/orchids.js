@@ -35,29 +35,44 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-router.get("/", function(req, res){
-	res.send("this is the server")
-});
+// router.get("/", function(req, res){
+// 	res.send("this is the server", data)
+// });
+
+// router.get("/orchids", function(req, res){
+// 	res.send("this is the data")
+// });
 
 
-// router.post('/new', function(req, res, next) {
-// 	var post = {
-// 		genus: req.body.genus,
-// 		cultivar: req.body.cultivar,
-// 		species: req.body.species,
-// 		notes: req.body.notes
-// 	  };
-// 	connection.query('insert into orchids values ?', post, function (error, results, fields) {
-// 			if(error) throw error;
-// 			res.send(JSON.stringify(results));
-// 	});
-// });
-// app.get('/new', function(req, res, next) {
-// 	connection.query('select * from orchids', function (error, results, fields) {
-// 			if(error) throw error;
-// 			res.send(JSON.stringify(results));
-// 	});
-// });
+
+
+router.post('/orchids', function(req, res, next) {
+	// var post = {
+	// 	genus: req.body.genus,
+	// 	cultivar: req.body.cultivar,
+	// 	species: req.body.species,
+	// 	notes: req.body.notes
+  //   };
+    connection.query('INSERT INTO orchids (genus, cultivar, species, notes) VALUES (?, ?, ?, ?)',
+    [req.body.genus, req.body.cultivar, req.body.species, req.body.notes],
+    function (error, results, fields) {
+      if (error) {
+        console.log(error, post)
+
+      }
+    }
+    )}
+  )
+  
+  
+    
+
+app.get('/orchids', function(req, res, next) {
+	connection.query('select * from orchids', function (error, results, fields) {
+			if(error) throw error;
+			res.send(JSON.stringify(results));
+	});
+});;
 
 
 
