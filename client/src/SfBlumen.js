@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Switch, Route, Link, Redirect } from "react-router-dom";
 import './sfBlumen.css';
+import ReactTable from "react-table";
 
 class SfBlumen extends Component {
   constructor(props) {
@@ -86,17 +87,35 @@ onChange(e) {
       <button>Submit</button>
 
     </form>
-    
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-        <footer>San Francisco Blumen</footer>
+    <div>
+    <form>
+    <input type="text" id="myInput" onClick="orchidFilter" placeholder="Search for names.."></input>
+    <input type="text" id="myInput" placeholder="Insert a new Orchid"></input>
+    </form>
+    
+   
+    {/* <ReactTable filterable={true} id="myTable" cellSpacing="0" width="100%">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Number</th>
+            <th>Genus</th>
+            <th>Species</th>
+            <th>Cultivar</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+      </ReactTable> */}
       </div>
-      
-  
+
+      <footer>San Francisco Blumen</footer>
+
+        </div>
 
     );
   }
 }
+
 
 export default SfBlumen;
