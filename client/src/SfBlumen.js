@@ -15,7 +15,21 @@ class SfBlumen extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 }
-
+// componentDidMount() {
+//   let self = this;
+//   fetch('/orchids', {
+//       method: 'GET'
+//   }).then(function(response) {
+//       if (response.status >= 400) {
+//           throw new Error("Bad response from server");
+//       }
+//       return response.json();
+//   }).then(function(data) {
+//       self.setState({users: data});
+//   }).catch(err => {
+//   console.log('caught it!',err);
+//   })
+// }
 onSubmit = (e) => {
     e.preventDefault()
     var data = {
@@ -90,8 +104,7 @@ onChange(e) {
 
     <div>
     <form>
-    <input type="text" id="myInput" onClick="orchidFilter" placeholder="Search for names.."></input>
-    <input type="text" id="myInput" placeholder="Insert a new Orchid"></input>
+    <input type="text" id="myInput" placeholder="Search for names.."></input>
     </form>
     
    

@@ -70,7 +70,8 @@ router.post('/orchids', function(req, res, next) {
 app.get('/orchids', function(req, res, next) {
 	connection.query('select * from orchids', function (error, results, fields) {
 			if(error) throw error;
-			res.send(JSON.stringify(results));
+      res.send(JSON.stringify(results));
+      console.log(results);
 	});
 });;
 
