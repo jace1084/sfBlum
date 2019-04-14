@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Switch, Route, Link, Redirect } from "react-router-dom";
 import './sfBlumen.css';
 import ReactTable from "react-table";
+import "react-table/react-table.css"
 
 class SfBlumen extends Component {
   constructor(props) {
@@ -10,26 +11,30 @@ class SfBlumen extends Component {
         genus: '',
         species: '',
         cultivar: '',
-        notes: ''
+        notes: '',
+        orchids: []
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 }
-// componentDidMount() {
-//   let self = this;
-//   fetch('/orchids', {
-//       method: 'GET'
-//   }).then(function(response) {
-//       if (response.status >= 400) {
-//           throw new Error("Bad response from server");
-//       }
-//       return response.json();
-//   }).then(function(data) {
-//       self.setState({users: data});
-//   }).catch(err => {
-//   console.log('caught it!',err);
-//   })
-// }
+componentDidMount() {
+  let self = this;
+  let url = "/orchids"
+  fetch(url, {
+      method: 'GET'
+  }).then(function(response) {
+      if (response.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(orchids => {
+      self.setState({orchids: orchids});
+      console.log(orchids)
+  }).catch(err => {
+  console.log('caught it!',err);
+  })
+}
+
 onSubmit = (e) => {
     e.preventDefault()
     var data = {
@@ -75,57 +80,82 @@ onChange(e) {
 }
 
   render() {
+
+    const data = [{
+      genus: this.state.genus.value,
+      species: this.state.species,
+      cultivar: this.state.cultivar,
+      notes: this.state.notes
+    }]
+    console.log(data);
+
+    const columns = [{
+      Header: 'Number (ID)',
+      accessor: 'id',
+      filterable: false
+    },{
+      Header: 'Genus',
+      accessor: 'genus',
+      filterable: true
+    },{
+      Header: 'Species',
+      accessor: 'species',
+      filterable: true
+    },{
+      Header: 'Cultivar',
+      accessor: 'cultivar',
+      filterable: true
+  },{
+      Header: 'Notes',
+      accessor: 'notes',
+      filterable: true
+  }];
     return (
 
       <div className="App">
         <header><h3>San Francisco Blumen</h3>
        {/* <button onclick="sortTable()">Sort</button> */}
     </header>
-
+<div className="addOrchid">
     <form className="orchidAdditon" name="orchidAdd" method="POST" onSubmit={this.onSubmit}>
 
       {/* <input type="text" name="orchid" placeholder="Add a new Orchid"></input> */}
       <label>Genus:
-      <input type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="what's the Genus"></input>
+      <input type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="what's the Genus" required="true"></input>
       </label>
       <label>Species:
-      <input type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="which Species"></input>  
+      <input type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="which Species" required="true"></input>  
       </label>
       <label>Cultivar:
-      <input type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar"></input>
+      <input type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar" required="true"></input>
       </label>
       <label>Notes:
-      <input type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Insert your Notes"></input>
+      <input type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Insert your Notes" required="true"></input>
       </label>
       
       <button>Submit</button>
 
     </form>
+    </div>
 
-    <div>
-    <form>
-    <input type="text" id="myInput" placeholder="Search for names.."></input>
-    </form>
     
-   
-    {/* <ReactTable filterable={true} id="myTable" cellSpacing="0" width="100%">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Number</th>
-            <th>Genus</th>
-            <th>Species</th>
-            <th>Cultivar</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-      </ReactTable> */}
-      </div>
+    {/* <form>
+    <input type="text" id="myInput" placeholder="Search for names.."></input>
+    </form> */}
+ 
+        <div className="orchidTable">
+
+        <ReactTable 
+                   data={this.state.orchids}
+                    columns={columns}
+                    defaultPageSize = {10}
+                    // pageSizeOptions = {[]}
+                  >
+                  </ReactTable>
+      </div> 
 
       <footer>San Francisco Blumen</footer>
-
-        </div>
-
+      </div>
     );
   }
 }

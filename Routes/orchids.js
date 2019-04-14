@@ -57,7 +57,7 @@ router.post('/orchids', function(req, res, next) {
     [req.body.genus, req.body.cultivar, req.body.species, req.body.notes],
     function (error, results, fields) {
       if (error) {
-        console.log(error, post)
+        console.log(error)
 
       }
     }
@@ -67,8 +67,8 @@ router.post('/orchids', function(req, res, next) {
   
     
 
-app.get('/orchids', function(req, res, next) {
-	connection.query('select * from orchids', function (error, results, fields) {
+router.get('/orchids', function(req, res, next) {
+	connection.query('SELECT * FROM orchids', function (error, results, fields) {
 			if(error) throw error;
       res.send(JSON.stringify(results));
       console.log(results);
