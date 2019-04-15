@@ -5,6 +5,7 @@ import ReactTable from "react-table";
 import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
 
+
 class SfBlumen extends Component {
   constructor(props) {
     super(props)
@@ -46,6 +47,7 @@ onSubmit = (e) => {
         species: document.orchidAdd.species.value,
         cultivar: document.orchidAdd.cultivar.value,
         notes: document.orchidAdd.notes.value,
+        pictures: document.orchidAdd.pictures.value
     }
 
   // console.log(data)
@@ -70,8 +72,9 @@ onSubmit = (e) => {
       let cultivar = document.orchidAdd.cultivar.value
       let species = document.orchidAdd.species.value
       let notes = document.orchidAdd.notes.value
+      let pictures = document.orchidAdd.pictures.value
 
-  console.log(genus, cultivar, species, notes);
+  console.log(genus, cultivar, species, notes, pictures);
 
     }
 
@@ -89,18 +92,21 @@ onChange(e) {
 
   render() {
 
-    const data = [{
-      pictures: this.state.pictures,
-      genus: this.state.genus.value,
-      species: this.state.species,
-      cultivar: this.state.cultivar,
-      notes: this.state.notes
-    }]
-    console.log(data);
+    // const data = [{
+    //   genus: this.state.genus.value,
+    //   species: this.state.species,
+    //   cultivar: this.state.cultivar,
+    //   notes: this.state.notes
+    // }]
+    // console.log(data);
+
+    // const img =[{
+    //   pictures: this.state.pictures.value
+    // }]
 
     const columns = [{
       Header: 'Image',
-      accessor: 'img',
+      accessor: 'pictures',
       filterable: false,
       sortable: false
     },{
@@ -135,31 +141,35 @@ onChange(e) {
 
       {/* <input type="text" name="orchid" placeholder="Add a new Orchid"></input> */}
       <label>Genus:
-      <input type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="what's the Genus" required="true"></input>
+      <input type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="what's the Genus" required={true}></input>
       </label>
       <label>Species:
-      <input type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="which Species" required="true"></input>  
+      <input type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="which Species" required={true}></input>  
       </label>
       <label>Cultivar:
-      <input type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar" required="true"></input>
+      <input type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar" required={true}></input>
       </label>
       <label>Notes:
-      <input type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Insert your Notes" required="true"></input>
+      <input type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Insert your Notes" required={true}></input>
       </label>
-      
-      <button>Submit</button>
 
-    </form>
-
-    <ImageUploader 
-                name="img"
+      <ImageUploader 
+                withPreview={true}
+                name="pictures"
                 value={this.state.pictures}
                 withIcon={true}
                 buttonText='Choose images'
                 onChange={this.onDrop}
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
+                fileSizeError="File size too large"
+                fileTypeError="this file Type is not supported"
             />
+      
+      <button>Submit</button>
+
+    </form>
+
     </div>
 
 
@@ -171,7 +181,6 @@ onChange(e) {
         <div className="orchidTable">
 
         <ReactTable 
-                    
                     data={this.state.orchids}
                     columns={columns}
                     defaultPageSize = {10}
@@ -180,7 +189,7 @@ onChange(e) {
                   </ReactTable>
       </div> 
 
-      <footer>San Francisco Blumen</footer>
+      {/* <footer>San Francisco Blumen</footer> */}
       </div>
     );
   }

@@ -47,14 +47,8 @@ connection.connect();
 
 
 router.post('/orchids', function(req, res, next) {
-	// var post = {
-	// 	genus: req.body.genus,
-	// 	cultivar: req.body.cultivar,
-	// 	species: req.body.species,
-	// 	notes: req.body.notes
-  //   };
     connection.query('INSERT INTO orchids (genus, cultivar, species, notes, img) VALUES (?, ?, ?, ?, ?)',
-    [req.body.genus, req.body.cultivar, req.body.species, req.body.notes, req.body.img],
+    [req.body.genus, req.body.cultivar, req.body.species, req.body.notes, req.body.pictures],
     function (error, results, fields) {
       if (error) {
         console.log(error)
@@ -64,9 +58,6 @@ router.post('/orchids', function(req, res, next) {
     )}
   )
   
-  
-    
-
 router.get('/orchids', function(req, res, next) {
 	connection.query('SELECT * FROM orchids', function (error, results, fields) {
 			if(error) throw error;
