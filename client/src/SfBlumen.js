@@ -151,7 +151,9 @@ onChange(e) {
 
     </form>
 
-    <ImageUploader
+    <ImageUploader 
+                name="img"
+                value={this.state.pictures}
                 withIcon={true}
                 buttonText='Choose images'
                 onChange={this.onDrop}
@@ -169,6 +171,7 @@ onChange(e) {
         <div className="orchidTable">
 
         <ReactTable 
+                    
                     data={this.state.orchids}
                     columns={columns}
                     defaultPageSize = {10}
