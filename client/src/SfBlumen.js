@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Switch, Route, Link, Redirect } from "react-router-dom";
 import './sfBlumen.css';
 import ReactTable from "react-table";
+import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
 
 class SfBlumen extends Component {
@@ -12,8 +13,10 @@ class SfBlumen extends Component {
         species: '',
         cultivar: '',
         notes: '',
-        orchids: []
+        orchids: [],
+        pictures: []
     }
+    this.onDrop = this.onDrop.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 }
@@ -69,9 +72,14 @@ onSubmit = (e) => {
       let notes = document.orchidAdd.notes.value
 
   console.log(genus, cultivar, species, notes);
-  
-  
+
     }
+
+    onDrop(picture) {
+      this.setState({
+          pictures: this.state.pictures.concat(picture),
+      });
+  }
     
 
 
@@ -82,6 +90,7 @@ onChange(e) {
   render() {
 
     const data = [{
+      pictures: this.state.pictures,
       genus: this.state.genus.value,
       species: this.state.species,
       cultivar: this.state.cultivar,
@@ -90,6 +99,11 @@ onChange(e) {
     console.log(data);
 
     const columns = [{
+      Header: 'Image',
+      accessor: 'img',
+      filterable: false,
+      sortable: false
+    },{
       Header: 'Number (ID)',
       accessor: 'id',
       filterable: false
@@ -136,7 +150,16 @@ onChange(e) {
       <button>Submit</button>
 
     </form>
+
+    <ImageUploader
+                withIcon={true}
+                buttonText='Choose images'
+                onChange={this.onDrop}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+            />
     </div>
+
 
     
     {/* <form>
@@ -146,7 +169,7 @@ onChange(e) {
         <div className="orchidTable">
 
         <ReactTable 
-                   data={this.state.orchids}
+                    data={this.state.orchids}
                     columns={columns}
                     defaultPageSize = {10}
                     // pageSizeOptions = {[]}
