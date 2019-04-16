@@ -39,6 +39,24 @@ componentDidMount() {
   })
 }
 
+componentWillMount() {
+  let self = this;
+  let url = "/orchids"
+  fetch(url, {
+      method: 'GET'
+  }).then(function(response) {
+      if (response.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(pictures => {
+      self.setState({pictures: pictures});
+      console.log(pictures)
+  }).catch(err => {
+  console.log('caught it!',err);
+  })
+}
+
 onSubmit = (e) => {
     e.preventDefault()
     var data = {
@@ -50,7 +68,7 @@ onSubmit = (e) => {
         pictures: document.orchidAdd.pictures.value
     }
 
-  // console.log(data)
+  console.log(data)
   fetch("/orchids", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -68,13 +86,13 @@ onSubmit = (e) => {
   });
 
 
-      let genus = document.orchidAdd.genus.value
-      let cultivar = document.orchidAdd.cultivar.value
-      let species = document.orchidAdd.species.value
-      let notes = document.orchidAdd.notes.value
-      let pictures = document.orchidAdd.pictures.value
+      // let genus = document.orchidAdd.genus.value
+      // let cultivar = document.orchidAdd.cultivar.value
+      // let species = document.orchidAdd.species.value
+      // let notes = document.orchidAdd.notes.value
+      // let pictures = document.orchidAdd.pictures.value
 
-  console.log(genus, cultivar, species, notes, pictures);
+  // console.log(genus, cultivar, species, notes, pictures);
 
     }
 
@@ -106,9 +124,10 @@ onChange(e) {
 
     const columns = [{
       Header: 'Image',
-      accessor: 'pictures',
+      accessor: 'img',
       filterable: false,
-      sortable: false
+      sortable: false,
+      resizable: true
     },{
       Header: 'Number (ID)',
       accessor: 'id',
@@ -155,8 +174,6 @@ onChange(e) {
 
       <ImageUploader 
                 withPreview={true}
-                name="pictures"
-                value={this.state.pictures}
                 withIcon={true}
                 buttonText='Choose images'
                 onChange={this.onDrop}
