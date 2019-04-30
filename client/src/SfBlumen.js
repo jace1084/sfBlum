@@ -155,24 +155,32 @@ onChange(e) {
         <header><h3>San Francisco Blumen</h3>
        {/* <button onclick="sortTable()">Sort</button> */}
     </header>
+    <nav className="navBar">
+
+    </nav>
 <div className="addOrchid">
     <form className="orchidAdditon" name="orchidAdd" method="POST" onSubmit={this.onSubmit}>
 
       {/* <input type="text" name="orchid" placeholder="Add a new Orchid"></input> */}
-      <label>Genus:
-      <input type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="what's the Genus" required={true}></input>
+      <label className="orchidInput-label">
+      <input className="orchidInput" type="text"  name="genus" value= {this.state.genus} onChange={this.onChange}  placeholder="Genus" required={true}></input>
       </label>
-      <label>Species:
-      <input type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="which Species" required={true}></input>  
+      <label className="orchidInput-label">
+      <input className="orchidInput" type="text" name="species" value= {this.state.species} onChange={this.onChange} placeholder="Species" required={true}></input>  
       </label>
-      <label>Cultivar:
-      <input type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="what's the Cultivar" required={true}></input>
+      <label className="orchidInput-label">
+      <input className="orchidInput" type="text" name="cultivar" value= {this.state.cultivar} onChange={this.onChange} placeholder="Cultivar" required={true}></input>
       </label>
-      <label>Notes:
-      <input type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Insert your Notes" required={true}></input>
+      <label className="orchidInput-label">
+      <input className="orchidInput" type="text" name="notes" value= {this.state.notes} onChange={this.onChange} placeholder="Notes" required={true}></input>
       </label>
+      
+      {/* <label>Upload Photo:
+      <input type="file" name="uploadPhoto" onChange={this.onPhotoUploadHandler}
+      />
+      </label> */}
 
-      <ImageUploader 
+      <ImageUploader className="fileUploader"
                 withPreview={true}
                 withIcon={true}
                 buttonText='Choose images'
@@ -183,30 +191,27 @@ onChange(e) {
                 fileTypeError="this file Type is not supported"
             />
       
-      <button>Submit</button>
+      <button id="submitButton">Submit</button>
 
     </form>
 
     </div>
 
-
     
-    {/* <form>
-    <input type="text" id="myInput" placeholder="Search for names.."></input>
-    </form> */}
- 
-        <div className="orchidTable">
 
-        <ReactTable 
+        <ReactTable className="orchidTable"
                     data={this.state.orchids}
                     columns={columns}
                     defaultPageSize = {10}
                     // pageSizeOptions = {[]}
                   >
                   </ReactTable>
-      </div> 
 
-      {/* <footer>San Francisco Blumen</footer> */}
+      <div className="blog">
+
+      </div>
+
+      <footer>San Francisco Blumen</footer>
       </div>
     );
   }
