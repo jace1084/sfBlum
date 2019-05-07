@@ -4,6 +4,19 @@ import './sfBlumen.css';
 import ReactTable from "react-table";
 import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
+import 'bootstrap/dist/css/bootstrap.css';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 
 
 class SfBlumen extends Component {
@@ -15,11 +28,20 @@ class SfBlumen extends Component {
         cultivar: '',
         notes: '',
         orchids: [],
-        pictures: []
+        pictures: [],
+        isOpen: false
     }
+
     this.onDrop = this.onDrop.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.toggle = this.toggle.bind(this);
+}
+
+toggle() {
+  this.setState({
+    isOpen: !this.state.isOpen
+  });
 }
 componentDidMount() {
   let self = this;
@@ -152,12 +174,40 @@ onChange(e) {
     return (
 
       <div className="App">
-        <header><h3>San Francisco Blumen</h3>
-       {/* <button onclick="sortTable()">Sort</button> */}
-    </header>
-    <nav className="navBar">
+        {/* <header><h3>San Francisco Blumen</h3></header> */}
+    
+    <Navbar color="light" light expand="md" className="navBar">
+          <NavbarBrand href="/">San Francisco Blumen</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="#">Gallery</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="#">Blog</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Account
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    User Sign In
+                  </DropdownItem>
+                  <DropdownItem>
+                    Admin Sign In
+                  </DropdownItem>
+                  {/* <DropdownItem divider />
+                  <DropdownItem>
+                    Reset
+                  </DropdownItem> */}
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
 
-    </nav>
 <div className="addOrchid">
     <form className="orchidAdditon" name="orchidAdd" method="POST" onSubmit={this.onSubmit}>
 
@@ -211,7 +261,7 @@ onChange(e) {
 
       </div>
 
-      <footer>San Francisco Blumen</footer>
+      {/* <footer>San Francisco Blumen</footer> */}
       </div>
     );
   }
