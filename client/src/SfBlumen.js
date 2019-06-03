@@ -5,6 +5,7 @@ import ReactTable from "react-table";
 import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
 import 'bootstrap/dist/css/bootstrap.css';
+
 import {
   Collapse,
   Navbar,
@@ -182,7 +183,7 @@ onChange(e) {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#">Gallery</NavLink>
+                <NavLink href="./components/Gallery.js">Gallery</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#">Blog</NavLink>
