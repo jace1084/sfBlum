@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import './sfBlumen.css';
 import ReactTable from "react-table";
 import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
 import 'bootstrap/dist/css/bootstrap.css';
-
+import Blog from "./containers/Blog/Blog"
+import Gallery from "./containers/Gallery/Gallery"
 import {
   Collapse,
   Navbar,
@@ -173,20 +174,29 @@ onChange(e) {
       filterable: true
   }];
     return (
+<Router>
+      <Switch>
+        <Route exact path ="/blog" component={Blog} />
+        <Route exact path ="/gallery" component={Gallery} />
 
       <div className="App">
+        
+        
+      
+
         {/* <header><h3>San Francisco Blumen</h3></header> */}
-    
     <Navbar color="light" light expand="md" className="navBar">
           <NavbarBrand href="/">San Francisco Blumen</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
+            
             <Nav className="ml-auto" navbar>
+              
               <NavItem>
-                <NavLink href="./components/Gallery.js">Gallery</NavLink>
+                <span><Link to="/gallery">Gallery</Link></span>
               </NavItem>
               <NavItem>
-                <NavLink href="#">Blog</NavLink>
+              <span><Link to="/blog">Blog</Link></span>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -208,6 +218,7 @@ onChange(e) {
             </Nav>
           </Collapse>
         </Navbar>
+        
 
 <div className="addOrchid">
     <form className="orchidAdditon" name="orchidAdd" method="POST" onSubmit={this.onSubmit}>
@@ -264,6 +275,9 @@ onChange(e) {
 
       {/* <footer>San Francisco Blumen</footer> */}
       </div>
+      </Switch>
+      </Router>
+      
     );
   }
 }
