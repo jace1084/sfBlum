@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import './sfBlumen.css';
 import ReactTable from "react-table";
-import ImageUploader from 'react-images-upload';
 import "react-table/react-table.css"
 import 'bootstrap/dist/css/bootstrap.css';
 import Blog from "./containers/Blog/Blog"
@@ -34,7 +33,7 @@ class SfBlumen extends Component {
         isOpen: false
     }
 
-    this.onDrop = this.onDrop.bind(this);
+    
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -89,7 +88,7 @@ onSubmit = (e) => {
         species: document.orchidAdd.species.value,
         cultivar: document.orchidAdd.cultivar.value,
         notes: document.orchidAdd.notes.value,
-        pictures: document.orchidAdd.pictures.value
+        // pictures: document.orchidAdd.pictures.value
     }
 
   console.log(data)
@@ -120,11 +119,7 @@ onSubmit = (e) => {
 
     }
 
-    onDrop(picture) {
-      this.setState({
-          pictures: this.state.pictures.concat(picture),
-      });
-  }
+    
     
 
 
@@ -146,13 +141,15 @@ onChange(e) {
     //   pictures: this.state.pictures.value
     // }]
 
-    const columns = [{
-      Header: 'Image',
-      accessor: 'img',
-      filterable: false,
-      sortable: false,
-      resizable: true
-    },{
+    const columns = [
+    //   {
+    //   Header: 'Image',
+    //   accessor: 'img',
+    //   filterable: false,
+    //   sortable: false,
+    //   resizable: true
+    // }
+    {
       Header: 'Number (ID)',
       accessor: 'id',
       filterable: false
@@ -181,9 +178,6 @@ onChange(e) {
 
       <div className="App">
         
-        
-      
-
         {/* <header><h3>San Francisco Blumen</h3></header> */}
     <Navbar color="light" light expand="md" className="navBar">
           <NavbarBrand href="/">San Francisco Blumen</NavbarBrand>
@@ -241,17 +235,6 @@ onChange(e) {
       <input type="file" name="uploadPhoto" onChange={this.onPhotoUploadHandler}
       />
       </label> */}
-
-      <ImageUploader className="fileUploader"
-                withPreview={true}
-                withIcon={true}
-                buttonText='Choose images'
-                onChange={this.onDrop}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                maxFileSize={5242880}
-                fileSizeError="File size too large"
-                fileTypeError="this file Type is not supported"
-            />
       
       <button id="submitButton">Submit</button>
 

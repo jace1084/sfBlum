@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
+import "react-image-gallery/styles/css/image-gallery.css";
 import './Gallery.css';
+import ImageUploader from 'react-images-upload';
 import {
   Collapse,
   Navbar,
@@ -24,10 +26,18 @@ class Gallery extends Component {
       super(props)
 
       this.state = {
-      isOpen: false
+      isOpen: false,
+      pictures: []
     }
     
     this.toggle = this.toggle.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+}
+
+onSubmit = (e) => {
+  e.preventDefault()
+  let pictures = this.state.pictures;
+  console.log("Submit was clicked");
 }
 
 toggle() {
@@ -36,10 +46,10 @@ toggle() {
       showBullets: true,
       infinite: true,
       showThumbnails: true,
-      // showFullscreenButton: true,
-      // showGalleryFullscreenButton: true,
-      // showPlayButton: true,
-      // showGalleryPlayButton: true,
+      showFullscreenButton: true,
+      showGalleryFullscreenButton: true,
+      showPlayButton: true,
+      showGalleryPlayButton: true,
       showNav: true,
       isRTL: false,
       slideDuration: 450,
@@ -51,12 +61,23 @@ toggle() {
   });
 }
 
+
+
+onDrop(picture) {
+  this.setState({
+      pictures: this.state.pictures.concat(picture),
+  });
+}
+ 
+
+
+
       render() {
 
         const images = [
           {
-            original: 'http://lorempixel.com/1000/600/nature/1/',
-            thumbnail: 'http://lorempixel.com/250/150/nature/1/',
+            original: this.pictures,
+            thumbnail: this.pictures,
           },
           {
             original: 'http://lorempixel.com/1000/600/nature/2/',
@@ -104,9 +125,25 @@ toggle() {
           </Collapse>
         </Navbar>
 
+        <form className="imgUploader">
+
+        <ImageUploader className="fileUploader"
+                withPreview={true}
+                withIcon={true}
+                buttonText='Choose images'
+                onChange={this.onDrop}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+                fileSizeError="File size too large"
+                fileTypeError="this file Type is not supported"
+            />
+             <button id="submitButton">Submit</button>
+        </form>
+
           <div className="imgGallery">
 
-              <ImageGallery items={images} />
+              <ImageGallery items={images} onSubmit={this.onSubmit} />
+            
               
             </div>
 
