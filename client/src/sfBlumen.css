@@ -23,6 +23,16 @@
   font-size: .8em;
 }
 
+.homeLinks:visited {
+  color: black;
+}
+.homeLinks:hover {
+  color: white;
+} 
+.homeLinks:active {
+  color: teal;
+}
+
 header{
   background: linear-gradient(-85deg,  #4CAF50, #1ab7db); 
   border-radius: 5px;
@@ -145,21 +155,19 @@ footer{
   }
   
   #submitButton {
-    padding: 5px;
+    margin: 15px;
     padding-left: 15px;
     padding-right: 15px;
-    font-size: 18px;
+    font-size: 15px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     outline: none;
-    color: black;
-    background-color: #4CAF50;
     border: none;
     justify-content: center;
-    border-radius: 30px;
+    border-radius: 15px;
     background-color: transparent; 
-    box-shadow:0 2px 5px 0 grey,0 2px 5px 0 grey;
+    box-shadow:0 2px 2px 0 grey,0 2px 2px 0 grey;
 
   }
   button:hover {background: linear-gradient(-85deg, #1ab7db, white); }

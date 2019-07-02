@@ -187,10 +187,10 @@ onChange(e) {
             <Nav className="ml-auto" navbar>
               
               <NavItem>
-                <span><Link to="/gallery">Gallery</Link></span>
+                <span><NavbarBrand className="homeLinks" href="/gallery">Gallery</NavbarBrand></span>
               </NavItem>
               <NavItem>
-              <span><Link to="/blog">Blog</Link></span>
+              <span><NavbarBrand className="homeLinks" href="/blog">Blog</NavbarBrand></span>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
