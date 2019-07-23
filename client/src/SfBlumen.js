@@ -30,14 +30,15 @@ class SfBlumen extends Component {
         notes: '',
         orchids: [],
         pictures: [],
-        isOpen: false
+        isOpen: false,
+        
     }
 
     
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.toggle = this.toggle.bind(this);
-}
+  }
 
 toggle() {
   this.setState({
