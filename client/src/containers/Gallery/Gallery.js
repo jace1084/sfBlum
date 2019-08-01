@@ -16,6 +16,7 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import ImageGallery from 'react-image-gallery';
+import axios from "axios"
 
 
 
@@ -27,17 +28,11 @@ class Gallery extends Component {
 
       this.state = {
       isOpen: false,
-      pictures: []
+      images: []
     }
     
     this.toggle = this.toggle.bind(this);
-    this.onDrop = this.onDrop.bind(this);
-}
-
-onSubmit = (e) => {
-  e.preventDefault()
-  let pictures = this.state.pictures;
-  console.log("Submit was clicked");
+    // this.onDrop = this.onDrop.bind(this);
 }
 
 toggle() {
@@ -61,33 +56,69 @@ toggle() {
   });
 }
 
+onChange(e) {
+  this.setState({[e.target.name]: e.target.value}); 
+  let files = e.target.files;
+  let reader = new FileReader();
+  reader.readAsDataURL(files[0]);
+  console.log("Image uploaded", files); 
+  // console.log("Image uploaded", e.target.value)
+}
+
+onSubmit = (e) => {
+  e.preventDefault()
+  var data = {
+      images: document.imgAdd.images.value
+  }
+  console.log("Submit was clicked", data);
+fetch("/gallery/images", {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(data)
+}).then(function(response) {
+  if (response.status >= 400) {
+    throw new Error("Bad response from server");
+  }
+  return response.json();
+}).then(function(data) {
+  console.log(data);    
+
+}).catch(function(err) {
+  console.log(err)
+});
+
+}
+
 
 
 onDrop(picture) {
   this.setState({
-      pictures: this.state.pictures.concat(picture),
+      images: this.state.images.concat(picture),
   });
+}
+
+componentDidMount() {
+  let self = this;
+  let url = "/gallery/images"
+  fetch(url, {
+      method: 'GET'
+  }).then(function(response) {
+      if (response.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(images => {
+      self.setState({images: images});
+      // console.log(orchids)
+  }).catch(err => {
+  console.log('caught it!',err);
+  })
 }
  
 
 
 
       render() {
-
-        const images = [
-          {
-            original: this.pictures,
-            thumbnail: this.pictures,
-          },
-          {
-            original: 'http://lorempixel.com/1000/600/nature/2/',
-            thumbnail: 'http://lorempixel.com/250/150/nature/2/'
-          },
-          {
-            original: 'http://lorempixel.com/1000/600/nature/3/',
-            thumbnail: 'http://lorempixel.com/250/150/nature/3/'
-          }
-        ]
         return (
           
             <div className="app">
@@ -125,7 +156,24 @@ onDrop(picture) {
           </Collapse>
         </Navbar>
 
-        <form className="imgUploader">
+        <div className="addImg">
+           <form className="imgAdditon" name="imgAdd" method="POST" onSubmit={this.onSubmit}>
+
+                  <h3>Please chosse your image</h3>
+                  <input type = "file" name = "images" value = {this.state.images} onChange = {(e) => this.onChange(e)}></input>
+
+                  <button id="submitButton">Submit</button>
+
+        </form>
+        </div>
+
+        <div className = "imgGallery">
+
+        <ImageGallery items={this.state.images}  />
+
+        </div>
+
+        {/* <form className="imgUploader">
 
         <ImageUploader className="fileUploader"
                 withPreview={true}
@@ -137,15 +185,8 @@ onDrop(picture) {
                 fileSizeError="File size too large"
                 fileTypeError="this file Type is not supported"
             />
-             <button id="submitButton">Submit</button>
-        </form>
-
-          <div className="imgGallery">
-
-              <ImageGallery items={images} onSubmit={this.onSubmit} />
             
-              
-            </div>
+        </form> */}
 
             </div>
             

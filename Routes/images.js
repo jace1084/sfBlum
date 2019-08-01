@@ -46,9 +46,9 @@ connection.connect();
 
 
 
-router.post('/orchids', function(req, res, next) {
-    connection.query('INSERT INTO orchids (genus, cultivar, species, notes) VALUES (?, ?, ?, ?)',
-    [req.body.genus, req.body.cultivar, req.body.species, req.body.notes],
+router.post('/images', function(req, res, next) {
+    connection.query('INSERT INTO orchidImages (img) VALUES (?)',
+    [req.body.pictures],
     function (error, results, fields) {
       if (error) {
         console.log(error)
@@ -58,39 +58,12 @@ router.post('/orchids', function(req, res, next) {
     )}
   )
   
-router.get('/orchids', function(req, res, next) {
-	connection.query('SELECT * FROM orchids', function (error, results, fields) {
+router.get('/images', function(req, res, next) {
+	connection.query('SELECT img FROM orchidImages', function (error, results, fields) {
 			if(error) throw error;
       res.send(JSON.stringify(results));
       console.log(results);
 	});
-});;
-
-
-
-
-
-// Image Gallery
-
-
-router.post('/gallery/images', function(req, res, next) {
-  connection.query('INSERT INTO orchidImages (img) VALUES (?)',
-  [req.body.images],
-  function (error, results, fields) {
-    if (error) {
-      console.log(error)
-
-    }
-  }
-  )}
-)
-
-router.get('/gallery/images', function(req, res, next) {
-connection.query('SELECT img FROM orchidImages', function (error, results, fields) {
-    if(error) throw error;
-    res.send(JSON.stringify(results));
-    console.log(results);
-});
 });;
 
 

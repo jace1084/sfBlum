@@ -29,7 +29,7 @@ class SfBlumen extends Component {
         cultivar: '',
         notes: '',
         orchids: [],
-        pictures: [],
+        // pictures: [],
         isOpen: false,
         
     }
@@ -57,29 +57,29 @@ componentDidMount() {
       return response.json();
   }).then(orchids => {
       self.setState({orchids: orchids});
-      console.log(orchids)
+      // console.log(orchids)
   }).catch(err => {
   console.log('caught it!',err);
   })
 }
 
-componentWillMount() {
-  let self = this;
-  let url = "/orchids"
-  fetch(url, {
-      method: 'GET'
-  }).then(function(response) {
-      if (response.status >= 400) {
-          throw new Error("Bad response from server");
-      }
-      return response.json();
-  }).then(pictures => {
-      self.setState({pictures: pictures});
-      console.log(pictures)
-  }).catch(err => {
-  console.log('caught it!',err);
-  })
-}
+// componentWillMount() {
+//   let self = this;
+//   let url = "/orchids"
+//   fetch(url, {
+//       method: 'GET'
+//   }).then(function(response) {
+//       if (response.status >= 400) {
+//           throw new Error("Bad response from server");
+//       }
+//       return response.json();
+//   }).then(pictures => {
+//       self.setState({pictures: pictures});
+//       // console.log(pictures)
+//   }).catch(err => {
+//   console.log('caught it!',err);
+//   })
+// }
 
 onSubmit = (e) => {
     e.preventDefault()

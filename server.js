@@ -24,9 +24,10 @@ var connection = mysql.createConnection({
 
 
   var orchidRoutes = require("./Routes/orchids.js");
+  var galleryRoutes = require("./Routes/images.js");
   
 
-  app.use("/", orchidRoutes);
+  app.use("/", orchidRoutes, galleryRoutes);
   
 
 //   if (process.env.NODE_ENV === 'production') {
