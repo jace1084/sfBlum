@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const router = express.Router();
 
-  app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.json({limit: '10000kb'})); // for parsing application/json -- Change to higher limit with images to allow a POST
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
    //enable CORS

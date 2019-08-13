@@ -16,7 +16,7 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import ImageGallery from 'react-image-gallery';
-import axios from "axios"
+// import axios, {post} from "axios"
 
 
 
@@ -28,11 +28,13 @@ class Gallery extends Component {
 
       this.state = {
       isOpen: false,
-      images: []
+      images: [],
+      files: ""
     }
     
     this.toggle = this.toggle.bind(this);
-    // this.onDrop = this.onDrop.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.onChange = this.onChange.bind(this);
 }
 
 toggle() {
@@ -59,16 +61,25 @@ toggle() {
 onChange(e) {
   this.setState({[e.target.name]: e.target.value}); 
   let files = e.target.files;
+  console.log("file", files)
   let reader = new FileReader();
   reader.readAsDataURL(files[0]);
-  console.log("Image uploaded", files); 
+
+  reader.onload=(e)=>{
+    console.log("Img Data", e.target.result)
+    
+    // const url = "/gallery/images"
+    // const formData = {file: e.target.result} 
+    
+  }
+  // console.log("Image uploaded", files); 
   // console.log("Image uploaded", e.target.value)
 }
 
 onSubmit = (e) => {
   e.preventDefault()
   var data = {
-      images: document.imgAdd.images.value
+      images: this.state.images
   }
   console.log("Submit was clicked", data);
 fetch("/gallery/images", {
@@ -86,19 +97,11 @@ fetch("/gallery/images", {
 }).catch(function(err) {
   console.log(err)
 });
-
 }
 
 
 
 onDrop(picture) {
-  this.setState({
-      images: this.state.images.concat(picture),
-  });
-}
-
-componentDidMount() {
-  let self = this;
   let url = "/gallery/images"
   fetch(url, {
       method: 'GET'
@@ -108,17 +111,44 @@ componentDidMount() {
       }
       return response.json();
   }).then(images => {
-      self.setState({images: images});
-      // console.log(orchids)
+  this.setState({
+      images: this.state.images.concat(picture)
+  });
+  console.log("Got here",images)
   }).catch(err => {
   console.log('caught it!',err);
   })
 }
+
+
+// componentDidMount() {
+//   let url = "/gallery/images"
+//   fetch(url, {
+//       method: 'GET'
+//   }).then(function(response) {
+//       if (response.status >= 400) {
+//           throw new Error("Bad response from server");
+//       }
+//       return response.json();
+//   }).then(images => {
+//       this.setState({images:this.state.images});
+//       console.log(images)
+//   }).catch(err => {
+//   console.log('caught it!',err);
+//   })
+// }
+
+
  
 
 
 
       render() {
+        const pics = this.state.images;
+        const pictures = [{
+          orginal: this.state.images
+        }]
+
         return (
           
             <div className="app">
@@ -157,25 +187,9 @@ componentDidMount() {
         </Navbar>
 
         <div className="addImg">
-           <form className="imgAdditon" name="imgAdd" method="POST" onSubmit={this.onSubmit}>
+           <form className="imgAdditon" name="imgAdd" type = "file" method="POST" onSubmit={this.onSubmit}>
 
-                  <h3>Please chosse your image</h3>
-                  <input type = "file" name = "images" value = {this.state.images} onChange = {(e) => this.onChange(e)}></input>
-
-                  <button id="submitButton">Submit</button>
-
-        </form>
-        </div>
-
-        <div className = "imgGallery">
-
-        <ImageGallery items={this.state.images}  />
-
-        </div>
-
-        {/* <form className="imgUploader">
-
-        <ImageUploader className="fileUploader"
+           <ImageUploader className="fileUploader"
                 withPreview={true}
                 withIcon={true}
                 buttonText='Choose images'
@@ -183,10 +197,27 @@ componentDidMount() {
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
                 fileSizeError="File size too large"
-                fileTypeError="this file Type is not supported"
+                fileTypeError="this file Type is not supported" 
             />
+
+                  <button id="submitButton">Submit</button>
+
+        </form>
+        </div>
+
+        <div className = "imgGallery">
+         <img src={pics}></img>
+        
+
+        {/* <ImageGallery items={pics}  /> */}
+
+        </div>
+
+        <form className="imgUploader">
+
+       
             
-        </form> */}
+        </form>
 
             </div>
             
